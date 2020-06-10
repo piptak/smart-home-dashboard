@@ -1,0 +1,28 @@
+version: "2.1"
+
+services:
+
+  heimdall:
+    image: linuxserver/heimdall
+    container_name: heimdall
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - ./heimdall:/config
+    ports:
+      - 80:80
+      - 443:443
+    restart: unless-stopped
+
+  portainer:
+    image: portainer/portainer
+    container_name: portainer
+    volumes: 
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./portainer:/data
+    ports:
+      - 9000:9000
+      - 8000:8000
+    restart: unless-stopped
